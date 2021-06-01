@@ -23,19 +23,19 @@ let loadCountries = () =>{
 
 let loadNeighbors = () =>{
 
-    let parametros = {
-        method: 'get',
-        //mode: 'no-cors',
-        cache: 'no-cache',
-        credentials: 'include',
-        headers:{
-            'Access-Control-Allow-Origin': 'http://localhost:3000',
-            'Access-Control-Allow-Credentials':true,
-            'Content-Type':'text/json'
-        }
-    }
+    // let parametros = {
+    //     method: 'get',
+    //     //mode: 'no-cors',
+    //     cache: 'no-cache',
+    //     credentials: 'include',
+    //     headers:{
+    //         'Access-Control-Allow-Origin': 'http://localhost:3000',
+    //         'Access-Control-Allow-Credentials':true,
+    //         'Content-Type':'text/json'
+    //     }
+    //}
     let countryCode = selectCountries.options[selectCountries.selectedIndex].value;
-    let neighbors = fetch('https://api.geodatasource.com/neighbouring-countries?key=7PUKVKJJCBNQHZQOQO3ZJVBCVHZJHTEP&country_code='+countryCode,parametros);
+    let neighbors = fetch('https://api.geodatasource.com/neighbouring-countries?key=7PUKVKJJCBNQHZQOQO3ZJVBCVHZJHTEP&country_code='+countryCode);
     neighbors.then(response =>response.json())
              .then(data => data.forEach(element =>{
                 let option = new Option(element.country_name,element.country_code);
