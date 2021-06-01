@@ -41,6 +41,7 @@ let loadNeighbors = () =>{
                 let option = new Option(element.country_name,element.country_code);
                 selectNeighbors.add(option);
              }))
+             .catch(error => console.log(error));
 }
 
 window.addEventListener('load',loadCountries);
