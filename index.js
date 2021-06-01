@@ -23,9 +23,9 @@ let loadCountries = () =>{
 
 let loadNeighbors = () =>{
 
-    // let parametros = {
+     let parametros = {
     //     method: 'get',
-    //     //mode: 'no-cors',
+         mode: 'no-cors',
     //     cache: 'no-cache',
     //     credentials: 'include',
     //     headers:{
@@ -33,7 +33,7 @@ let loadNeighbors = () =>{
     //         'Access-Control-Allow-Credentials':true,
     //         'Content-Type':'text/json'
     //     }
-    //}
+    }
     let countryCode = selectCountries.options[selectCountries.selectedIndex].value;
     let neighbors = fetch('https://api.geodatasource.com/neighbouring-countries?key=7PUKVKJJCBNQHZQOQO3ZJVBCVHZJHTEP&country_code='+countryCode);
     neighbors.then(response =>response.json())
