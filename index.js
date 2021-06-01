@@ -1,6 +1,6 @@
 // Asocia la función que cargará el listado de países al evento de carga de la página.
 let selectCountries = document.querySelector('.country');
-let selectNeighbors = document.querySelector('.neighbor');
+
 let loadCountries = () =>{
     //Traer los países -- fetch
     //Los cargo en el elemento html
@@ -22,7 +22,8 @@ let loadCountries = () =>{
 }
 
 let loadNeighbors = () =>{
-
+    let selectNeighbors = document.querySelector('.neighbor');
+    selectNeighbors.innerHTML='';
      let parametros = {
          method: 'get',
          mode: 'no-cors',
