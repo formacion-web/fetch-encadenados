@@ -20,9 +20,12 @@ const fetchData = async (url)=>{
 
 };
 
-const createElementOption = (countryName, countryCode=' ') =>{
+const createElementOption = (countryName, countryCode=' ',coords={lat:0,long:0}) =>{
     let option = new Option(countryName);
-        option.value = countryCode;
+    option.value = countryCode;
+    option.setAttribute('data-lat',coords.lat);
+    option.setAttribute('data-lon',coords.lon);
+    
     return option;
 };
 
@@ -34,14 +37,26 @@ const loadCountries = async ()=>{
 
         let data = await fetchData(URLs.countries);
         
-        data.map(country => selectCountries.add(createElementOption(country.translations.de,country.alpha2Code)));
-        selectCountries.addEventListener('change',loadNeighbors);
+        data.map(country => selectCountries.add(createElementOption(country.translations.de,country.alpha2Code,{lat:country.latlng[0],lon:country.latlng[1]})));
+
+        selectCountries.addEventListener('change',changeSelectorCountries);
     } catch (error) {
         console.log(error);
     }
     
 }
 
+const changeSelectorCountries = ()=>{
+    const selected = selectCountries.options[selectCountries.selectedIndex]
+    loadNeighbors(selected);
+    const lat = selected.getAttribute('data-lat');
+    const lon = selected.getAttribute('data-lon');
+    console.log(lat,lon);
+    setMap(lat,lon);
+    
+    
+
+}
 // let loadCountries = () =>{
 //     //Traer los países -- fetch
 //     //Los cargo en el elemento html
@@ -63,7 +78,7 @@ const loadCountries = async ()=>{
 // }
 
 
-const loadNeighbors = async ()=>{
+const loadNeighbors = async (countrySelected)=>{
 
     try {
         const parametros = {
@@ -74,7 +89,7 @@ const loadNeighbors = async ()=>{
 
         const selectNeighbors = document.querySelector('.neighbor');
         selectNeighbors.innerHTML='';
-        const countryCode = selectCountries.options[selectCountries.selectedIndex].value;
+        const countryCode = countrySelected.value;
         const neighbors = await fetchData(URLs.neighbors.concat(countryCode),parametros);
         neighbors.map(country => selectNeighbors.add(createElementOption(country.country_name, country.country_code)));
 
@@ -112,3 +127,4 @@ const loadNeighbors = async ()=>{
 // }
 
 window.addEventListener('load',loadCountries);
+window.addEventListener('load',obtenerLocalizacion);
